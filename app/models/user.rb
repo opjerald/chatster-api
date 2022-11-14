@@ -7,6 +7,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  validates :username, uniqueness: true, presence: true
+  validates :email, uniqueness: { case_sensitive: false }
+
   def jwt_payload
     super()
   end

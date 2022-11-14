@@ -18,7 +18,7 @@ class Users::SessionsController < Devise::SessionsController
     token = header.split(' ').last if header
 
     begin
-      decoded = JWT.decoded(token, ENV['SECRET_KEY']).first
+      decoded = JWT.decode(token, ENV['SECRET_KEY']).first
       current_user = User.find(decoded['sub'])
 
       if current_user
