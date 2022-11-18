@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   defaults format: :json do
     resources :users, only: [:index]
+    resources :messages, only: [:show, :create]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
