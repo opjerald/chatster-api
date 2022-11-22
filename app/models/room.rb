@@ -4,7 +4,9 @@ class Room < ApplicationRecord
 
   scope :public_rooms, -> { where(is_private: false) }
 
-  def self.create_private_room(users, room_name)
+  def self.create_private_room(users)
+    user = users.sort
+    room_name = "private_#{user[0].id}_#{user[1].id}"
     room = Room.create(name: room_name, is_private: true)
     users.each do |user|
       Participant.create(user: user, room: room)
