@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
 
   def create
     @user = User.find(message_params['id'])
-    room_name = get_room_name(current_user, @user)
+    room_name = get_room_name(current_user, @user) || params[:name]
     @room = Room.find_by_name(room_name) || Room.create_private_room([@user, current_user], room_name)
     @messages = current_user.messages.create(body: message_params['body'], room: @room)
   end
