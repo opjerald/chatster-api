@@ -6,7 +6,7 @@ class Room < ApplicationRecord
 
   def self.create_private_room(users)
     user = users.sort
-    room_name = "private_#{user[0].id}_#{user[1].id}"
+    room_name = "private_#{user[0]}_#{user[1]}"
     room = Room.create(name: room_name, is_private: true)
     users.each do |user|
       Participant.create(user: user, room: room)

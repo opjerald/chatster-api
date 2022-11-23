@@ -13,9 +13,8 @@ Rails.application.routes.draw do
 
   defaults format: :json do
     resources :users, only: [:index, :show]
-    resources :rooms, only: [:index, :show, :create] do
-      resources :messages, only: [:create]
-    end
+    resources :rooms, only: [:index, :show, :create]
+    resources :messages, only: [:create]
     post 'rooms/private', to: "rooms#create_private"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

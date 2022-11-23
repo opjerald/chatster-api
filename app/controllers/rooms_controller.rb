@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :authenticate_user!
   
   def index
     @rooms = []
@@ -8,19 +9,14 @@ class RoomsController < ApplicationController
         @rooms << p.room
       end
     end
-    @rooms
   end
   
   def show
     @room = Room.find(params[:id])
+    @messages = @room.messages
   end
 
   def create
     @room = Room.create(name: params[:name])
-  end
-
-  def create_private
-    @user = User.find[params[:user_id]]
-    @room = Room.create_private_room([current_user, @user])
   end
 end

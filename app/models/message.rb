@@ -2,6 +2,8 @@ class Message < ApplicationRecord
   belongs_to :user
   belongs_to :room
 
+  validates :body, presence: true
+
   before_create :confirm_participants
 
   def confirm_participants
