@@ -1,0 +1,1 @@
+json.extract! room, :id, :name, :is_private, :created_at, :updated_at

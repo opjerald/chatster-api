@@ -1,17 +1,21 @@
 class MessagesController < ApplicationController
-  def show
-    users = "{#{current_user.id}, #{params[:id]}}"
-    @messages = Message.where("users @> ?", users)
-  end
-
+  before_action :authenticate_user!
+  
   def create
-    users = [current_user.id.to_i, message_params['to'].to_i].sort
-    @message = Message.new(body: message_params['body'], users: users, user: current_user)
+
+    if message_params['room_id']
+      @room = Room.find(message_params['room_id'])
+    elsif message_params['user_id']
+      room_name = get_room_name([current_user.id, message_params['user_id'].to_i])
+      @room = Room.find_by_name(room_name) || Room.create_private_room([current_user.id], message_params['user_id'].to_i)
+    end
+
+    @message = current_user.messages.create(body: message_params['body'], room: @room)
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:to, :body)
+    params.require(:message).permit(:body, :room_id, :user_id)
   end
 end

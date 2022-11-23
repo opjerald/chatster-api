@@ -1,7 +1,7 @@
 json.success 1 == 1
 json.data do
-  json.user do
-    json.partial! "users/user", user: @user
+  json.room do
+    json.partial! "rooms/room", room: @room
   end
   json.messages do
     json.array! @messages do |message|
